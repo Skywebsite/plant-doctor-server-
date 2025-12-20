@@ -1,0 +1,16 @@
+# IMPORTANT: This project requires Python 3.8 or higher
+# 
+# Ultralytics YOLOv8 requires Python 3.8+ and numpy>=1.22.2
+# If you have Python 3.7, you have two options:
+#   1. Upgrade to Python 3.8+ (RECOMMENDED) - use this requirements.txt
+#   2. Use requirements-py37.txt (limited functionality, no YOLOv8)
+
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+ultralytics==8.1.0
+python-multipart==0.0.6
+pillow==10.1.0
+numpy>=1.26.0
+pydantic==2.5.0
+deep-translator==1.11.4
+

@@ -1,0 +1,22 @@
+# WARNING: Python 3.7 Compatible Requirements
+# 
+# IMPORTANT: Ultralytics YOLOv8 REQUIRES Python 3.8+
+# This file allows you to install FastAPI and other dependencies,
+# but YOLOv8 training and inference WILL NOT WORK on Python 3.7.
+#
+# You MUST upgrade to Python 3.8+ to use this project fully.
+# See PYTHON_VERSION_WARNING.md for upgrade instructions.
+
+# FastAPI and related (Python 3.7 compatible)
+fastapi==0.103.2
+uvicorn==0.22.0
+python-multipart==0.0.6
+pydantic==1.10.12
+
+# Image processing (Python 3.7 compatible)
+pillow==9.5.0
+numpy==1.21.6
+
+# Ultralytics YOLOv8 - WILL NOT INSTALL ON PYTHON 3.7
+# ultralytics==8.0.151  # Uncomment only if you upgrade to Python 3.8+
+
