@@ -33,14 +33,17 @@ ENV/
 *.swo
 *~
 
-# Model files - allow model directory files to be committed
 # Training outputs
 runs/
 
-# Ignore .pt files except in model directory
+# Ignore .pt files everywhere EXCEPT in model directory
 *.pt
+!model/
 !model/*.pt
+
+# Ignore .onnx files everywhere EXCEPT in model directory
 *.onnx
+!model/
 !model/*.onnx
 
 # OS
