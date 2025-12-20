@@ -33,14 +33,15 @@ ENV/
 *.swo
 *~
 
-# Model files (uncomment if you don't want to commit models)
-# model/*.pt
-# model/*.onnx
-
+# Model files - allow model directory files to be committed
 # Training outputs
 runs/
+
+# Ignore .pt files except in model directory
 *.pt
+!model/*.pt
 *.onnx
+!model/*.onnx
 
 # OS
 .DS_Store
