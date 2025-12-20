@@ -1,0 +1,19 @@
+# Ignore unnecessary files for Vercel deployment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.log
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+runs/
+train/
+*.tmp
+*.temp
