@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Training (not needed in production)
+train/
+runs/
+*.ipynb
+
+# Documentation
+*.md
+!README.md
+INSTALL_INSTRUCTIONS.md
+PYTHON_VERSION_WARNING.md
+PYTHON37_STATUS.md
+VERCEL_DEPLOYMENT.md
+VERCEL_SETTINGS.md
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Vercel (not needed for Railway)
+.vercelignore
+vercel.json
+api/
+
+# Render (not needed for Railway)
+render.yaml
+
+# Backup files
+*.backup
+Pipfile.backup
