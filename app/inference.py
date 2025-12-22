@@ -13,7 +13,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 # Try to import ultralytics - handle case when it's not installed (Python 3.7)
 try:
+    import torch
     from ultralytics import YOLO
+    # Fix for PyTorch 2.6+ weights_only default change
+    # Add Ultralytics classes to safe globals for model loading
+    try:
+        from ultralytics.nn.tasks import DetectionModel
+        torch.serialization.add_safe_globals([DetectionModel])
+    except (ImportError, AttributeError):
+        # If add_safe_globals doesn't exist or import fails, 
+        # we'll handle it in the model loading
+        pass
     ULTRALYTICS_AVAILABLE = True
 except ImportError:
     ULTRALYTICS_AVAILABLE = False
@@ -57,7 +67,30 @@ class ModelInference:
             )
         
         print(f"Loading YOLO model from: {self.model_path.absolute()}")
-        self.model = YOLO(str(self.model_path))
+        try:
+            # Try loading with default settings first
+            self.model = YOLO(str(self.model_path))
+        except Exception as e:
+            # If loading fails due to weights_only issue, try with weights_only=False
+            if "weights_only" in str(e) or "WeightsUnpickler" in str(e):
+                print("Model loading failed with weights_only=True, retrying with weights_only=False...")
+                import torch
+                # Temporarily patch torch.load to use weights_only=False
+                original_load = torch.load
+                def patched_load(*args, **kwargs):
+                    kwargs['weights_only'] = False
+                    return original_load(*args, **kwargs)
+                torch.load = patched_load
+                try:
+                    self.model = YOLO(str(self.model_path))
+                    # Restore original torch.load
+                    torch.load = original_load
+                except Exception as e2:
+                    # Restore original torch.load before re-raising
+                    torch.load = original_load
+                    raise e2
+            else:
+                raise
         print("Model loaded successfully!")
     
     def predict(self, image: Image.Image) -> Dict:
