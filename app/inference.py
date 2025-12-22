@@ -67,30 +67,36 @@ class ModelInference:
             )
         
         print(f"Loading YOLO model from: {self.model_path.absolute()}")
+        
+        # Fix for PyTorch 2.6+ weights_only issue
+        # Patch torch.load to use weights_only=False before loading model
+        import torch
+        original_load = torch.load
+        
+        def patched_load(*args, **kwargs):
+            # Always set weights_only=False for model loading
+            if 'weights_only' not in kwargs:
+                kwargs['weights_only'] = False
+            return original_load(*args, **kwargs)
+        
+        # Apply patch
+        torch.load = patched_load
+        
         try:
-            # Try loading with default settings first
+            # Try to add safe globals if method exists
+            try:
+                from ultralytics.nn.tasks import DetectionModel
+                if hasattr(torch.serialization, 'add_safe_globals'):
+                    torch.serialization.add_safe_globals([DetectionModel])
+            except (ImportError, AttributeError):
+                pass
+            
+            # Load model with patched torch.load
             self.model = YOLO(str(self.model_path))
-        except Exception as e:
-            # If loading fails due to weights_only issue, try with weights_only=False
-            if "weights_only" in str(e) or "WeightsUnpickler" in str(e):
-                print("Model loading failed with weights_only=True, retrying with weights_only=False...")
-                import torch
-                # Temporarily patch torch.load to use weights_only=False
-                original_load = torch.load
-                def patched_load(*args, **kwargs):
-                    kwargs['weights_only'] = False
-                    return original_load(*args, **kwargs)
-                torch.load = patched_load
-                try:
-                    self.model = YOLO(str(self.model_path))
-                    # Restore original torch.load
-                    torch.load = original_load
-                except Exception as e2:
-                    # Restore original torch.load before re-raising
-                    torch.load = original_load
-                    raise e2
-            else:
-                raise
+        finally:
+            # Restore original torch.load after model loading
+            torch.load = original_load
+        
         print("Model loaded successfully!")
     
     def predict(self, image: Image.Image) -> Dict:
