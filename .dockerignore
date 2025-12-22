@@ -73,8 +73,8 @@ desktop.ini
 vercel.json
 api/
 
-# Render (not needed for Railway)
-render.yaml
+# Note: render.yaml needed for Render deployments
+# render.yaml
 
 # Backup files
 *.backup
