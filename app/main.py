@@ -41,7 +41,7 @@ app = FastAPI(
 # Allow specific origins for development and production
 allowed_origins = [
     "http://localhost:3000",
-    "http://localhost:3001",
+    "https://crop-doctor-frontend-jtx7.vercel.app",
     "http://127.0.0.1:3000",
     "https://plant-doctor-server-1313.onrender.com",
 ]
