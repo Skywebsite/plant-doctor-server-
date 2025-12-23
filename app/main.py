@@ -37,22 +37,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Add CORS middleware for React/React Native frontend
-# Allow specific origins for development and production
-allowed_origins = [
-    "http://localhost:3000",
-    "https://crop-doctor-frontend-jtx7.vercel.app",
-    "http://127.0.0.1:3000",
-    "https://plant-doctor-server-1313.onrender.com",
-]
-
+# Add CORS middleware - allow all origins for maximum compatibility
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
 
 
